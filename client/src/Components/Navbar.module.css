@@ -1,0 +1,49 @@
+
+body{
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.main{
+    padding: 1rem;
+    /* max-width: 500px; */
+    margin: 0 auto;
+    display: flex;
+    border: 5px solid gray;
+}
+
+.logo {
+    font-size: 25px;
+    text-decoration: none;
+    color: black;
+    font-weight: 600;
+    width: 50%;
+}
+
+.loginregister{
+    display: flex;
+    align-items: center;
+    width: 100%;
+    width: 50%;
+}
+
+.loginregister1{
+    display: flex;
+    justify-content: space-between;
+    list-style-type: none;
+    font-weight: 600;
+    font-size: 25px;
+}
+
+.loginregister1 li{
+    padding: 0 10rem;
+}
+
+.loginregister ul li a{
+    text-decoration: none;
+    color: black;
+    
+}
+
+
+
+
