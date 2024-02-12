@@ -42,7 +42,7 @@ function CreateBlog() {
         <UserMenu />
       </div>
       <div className={styles.content}> 
-        <h1 className={styles.title}>CREATE BLOG</h1> 
+        <h2 className={styles.title}>CREATE BLOG</h2> 
         <div className={styles.form}>
           <div className={styles.inputGroup}> 
             <input
