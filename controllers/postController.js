@@ -11,10 +11,8 @@ export const getPosts = async (req, res) => {
     res.status(200).send({
       success:true,
       message:"All posts fetched successfully",
-      counTotal: blog.length,
-      data:{
-        posts:posts
-      }
+      counTotal: posts.length,
+      posts,
     });
   } catch (error) {
     res.status(404).send({

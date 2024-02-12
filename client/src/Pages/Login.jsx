@@ -1,59 +1,66 @@
-import {useState} from 'react'
-import styles from "./Login.module.css";
-import { useNavigate,useLocation } from 'react-router-dom';
-import axios from 'axios';
-import { toast } from "react-toastify";
-import { useAuth } from '../Context/Auth';
-import { Link } from 'react-router-dom';
+import React, { useState } from "react";
+import { Link, useNavigate, useLocation, NavLink } from "react-router-dom";
+import axios from "axios";
+import { useAuth } from "../Context/authContext.jsx";
+import loginstyle from "./Login.module.css";
 
 function Login() {
-
   const [username, setusername] = useState("");
   const [password, setpassword] = useState("");
-  const {auth,setAuth} = useAuth();
   const location = useLocation();
-
   const navigate = useNavigate();
-  const handleSubmit =async (e) =>{
-    
+  const { auth, setAuth } = useAuth();
+
+  const handlesubmit = async (e) => {
     e.preventDefault();
     try {
-      const res = await axios.post("/api/v1/auth/login", { username, password });
-      console.log(res);
-      if (res) {
-        toast.success(res.data && res.data.message);
-        localStorage.setItem("auth", JSON.stringify(res.data));
+      const res = await axios.post(`/api/v1/auth/login`, { username, password });
+      if (res && res.data && res.data.success) {
+        alert(res.data.message);
         setAuth({
           ...auth,
           user: res.data.user,
           token: res.data.token,
         });
-        navigate(location.storage || '/home');
+        localStorage.setItem("auth", JSON.stringify(res.data));
+        navigate(location.state || "/dashboard/user");
       } else {
-        toast.error(res.response.data.message);
+        console.log(res.data.message);
       }
     } catch (error) {
       console.log(error);
-      toast.error(error.message); // Access the error message directly
     }
-    
-  }
-  return (
-    <div className={styles.container}>
-      <img src="https://i.postimg.cc/zX8Zbg5P/avatar.png" alt="" />
-      <form action='#' onSubmit={handleSubmit}>
-       <input type="text" name="username" placeholder="Username" value={username} onChange={(e)=> setusername(e.target.value)} required></input>
+  };
 
-       <input type="text" name="password" placeholder="Password" value={password} onChange={(e)=> setpassword(e.target.value)} required></input>
-       
-       <div className={styles.btn}>
-       <button><Link to="/forgotpassword">Forgot Password</Link></button>
-       <button type="submit" >Login</button>
-       </div>
-      
-      </form>
+  return (
+    <div className={loginstyle.main}>
+      <div className={loginstyle.login}>
+        <form>
+          <h1>Login</h1>
+          <input
+            type="text"
+            required
+            value={username}
+            onChange={(e) => setusername(e.target.value)}
+          />
+          <input
+            type="Password"
+            required
+            value={password}
+            onChange={(e) => setpassword(e.target.value)}
+          />
+          <input
+            className={loginstyle.button_common}
+            type="submit"
+            value="Login"
+            onClick={handlesubmit}
+          ></input>
+        </form>
+        <NavLink to="/register">Not yet registered? Register Now</NavLink>
+        <br />
+      </div>
     </div>
-  )
+  );
 }
 
-export default Login
+export default Login;
